@@ -30,6 +30,15 @@ func LoadConfig(path string) (config Config, err error) {
 	viper.SetDefault("PORT", "8080")
 	viper.SetDefault("ENABLE_CACHE", false)
 	viper.SetDefault("JWT_EXPIRATION_HOURS", 72)
+	
+	// Explicitly bind environment variables so Unmarshal picks them up
+	viper.BindEnv("MONGO_URI")
+	viper.BindEnv("DB_NAME")
+	viper.BindEnv("JWT_SECRET_KEY")
+	viper.BindEnv("REDIS_ADDR")
+	viper.BindEnv("REDIS_PASSWORD")
+	viper.BindEnv("LOG_LEVEL")
+	viper.BindEnv("LOG_FORMAT")
 
 	err = viper.ReadInConfig()
 	if err != nil {
